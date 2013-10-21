@@ -81,7 +81,7 @@ module.exports = (grunt) ->
         browsers: ['Chrome']
       unit:
         options:
-          files: ['target/test/unit/lib/angular.js', 'target/test/unit/lib/angular-mocks.js', 'target/main/js/**/*.js', 'target/test/unit/js/**/*.js']
+          files: ['target/main/lib/angular.js', 'target/test/unit/lib/angular-mocks.js', 'target/main/js/**/*.js', 'target/test/unit/js/**/*.js']
 
     protractor:
       options:
