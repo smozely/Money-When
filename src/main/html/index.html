@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <title>You want what when?</title>
+</head>
+<body ng-controller="MoneyCtrl">
+
+  <div>
+  	You need how much?
+  	<input type="text" ng-model="amount" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/"/>
+  </div>
+
+  <div>
+  	By When?
+  	<input type="date" ng-model="when" ng-required="true"/>
+  </div>
+
+  <div>
+  	You get paid?
+
+  	<p>
+  		Every Week
+  		<input type="radio" name="freqz" ng-model="freq" value="WEEK">
+  	</p>
+  	<p>
+  		Every Fortnight
+  		<input type="radio" name="freqz" ng-model="freq" value="FORTNIGHT">
+  	</p>
+  	<p>
+  		Every Month
+  		<input type="radio" name="freqz" ng-model="freq" value="MONTH">
+  	</p>
+  </div>
+
+  <input type="submit" ng-click="calculate()" />
+
+  <div ng-show="result">You need to save {{result}}</div>
+
+
+  <script src="lib/angular.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
