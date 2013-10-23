@@ -90,6 +90,9 @@ module.exports = (grunt) ->
         options:
           background: true
           reporters: 'dots'
+      build:
+        options:
+          singleRun: true
 
 # Protractor doesn't work on mavericks at the moment.
     protractor:
@@ -125,5 +128,5 @@ module.exports = (grunt) ->
   grunt.registerTask 'default', ['dev']
   grunt.registerTask 'build', ['copy', 'coffeelint', 'coffee']
   grunt.registerTask 'dev', ['build', 'connect', 'karma:dev:start', 'watch']
-  grunt.registerTask 'test', ['build', 'karma:dev']
+  grunt.registerTask 'test', ['build', 'karma:build']
   grunt.registerTask 'deploy', ['clean', 'test', 's3']
