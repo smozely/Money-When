@@ -1,5 +1,5 @@
 {
-  "name": "Money When",
+  "name": "Money-When",
   "version": "0.0.0",
   "description": "You Need How Much Money When?",
   "devDependencies": {
@@ -15,7 +15,8 @@
     "karma-jasmine": "~0.1.0",
     "karma-script-launcher": "~0.1.0",
     "karma-chrome-launcher": "~0.1.0",
-    "protractor": "~0.10.0"
+    "protractor": "~0.10.0",
+    "grunt-aws": "~0.2.5"
   },
   "author": "Steve Mosley",
   "license": "MIT"

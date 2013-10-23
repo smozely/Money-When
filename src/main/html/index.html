@@ -7,10 +7,11 @@
 
   <title>You want what when?</title>
   <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
 </head>
 <body ng-controller="MoneyCtrl">
   <div class="container">
-    <form role="form">
+    <form role="form" class="main-form">
       <div class="form-group">
         <label for="amount">You need how much</label>
         <input id="amount" type="text" ng-model="amount" ng-required="true" ng-pattern="/^[0-9]+([.][0-9]+)?$/" placeholder="Enter Amount" class="form-control"/>
@@ -50,7 +51,7 @@
       </div>
       <input type="submit" ng-click="calculate()" class="btn btn-primary" />
     </form>
-    <div ng-show="result">You need to save {{result | currency: '$'}}</div>
+    <div ng-show="result" class="alert alert-success">You need to save {{result | currency: '$'}}</div>
   </div>
 
   <script src="lib/angular.js"></script>

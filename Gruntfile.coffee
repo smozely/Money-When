@@ -4,6 +4,7 @@ module.exports = (grunt) ->
   # Initialize the configuration.
   grunt.initConfig
 
+    aws: grunt.file.readJSON("credentials.json")
 
     clean:
       main:
@@ -89,6 +90,18 @@ module.exports = (grunt) ->
         configFile: "src/test/e2e/protractor.conf.js"
       singlerun: {}
 
+    s3:
+      options:
+        accessKeyId: "<%= aws.accessKeyId %>"
+        secretAccessKey: "<%= aws.secretAccessKey %>"
+        region: "<%= aws.region %>"
+        bucket: "<%= aws.bucket %>"
+
+      build:
+        cwd: "target/main"
+        src: "**"
+        dest: "money-when/"
+
   # Load external Grunt task plugins.
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-copy"
@@ -97,6 +110,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-karma"
   grunt.loadNpmTasks "grunt-protractor-runner"
+  grunt.loadNpmTasks "grunt-aws"
 
   # Default task.
   grunt.registerTask "default", ["clean", "copy", "coffeelint", "coffee"]
+  grunt.registerTask "deploy", ["clean", "copy", "coffeelint", "coffee", "s3"]
