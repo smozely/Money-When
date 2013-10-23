@@ -4,7 +4,7 @@ module.exports = (grunt) ->
   # Initialize the configuration.
   grunt.initConfig
 
-    aws: grunt.file.readJSON("credentials.json")
+    aws: grunt.file.readJSON('credentials.json')
 
     clean:
       main:
@@ -38,21 +38,21 @@ module.exports = (grunt) ->
     # Lint CoffeeScripts
     coffeelint:
       options:
-        "max_line_length":
-          "value": 160,
-          "level": "error"
+        'max_line_length':
+          'value': 160,
+          'level': 'error'
 
       main:
         files:
-          src: ["src/main/coffee/**/*.coffee"]
+          src: ['src/main/coffee/**/*.coffee']
 
       unit:
         files:
-          src: ["src/test/unit/coffee/**/*.coffee"]
+          src: ['src/test/unit/coffee/**/*.coffee']
 
       e2e:
         files:
-          src: ["src/test/e2e/coffee/**/*.coffee"]
+          src: ['src/test/e2e/coffee/**/*.coffee']
 
 
     # Compile CoffeeScripts
@@ -62,56 +62,68 @@ module.exports = (grunt) ->
 
       main:
         files:
-          "target/main/js/main.js": ["src/main/coffee/main.coffee", "src/main/coffee/**/*.coffee"]
+          'target/main/js/main.js': ['src/main/coffee/main.coffee', 'src/main/coffee/**/*.coffee']
 
       unit:
         files:
-          "target/test/unit/js/test.js": ["src/test/unit/coffee/**/*.coffee"]
+          'target/test/unit/js/test.js': ['src/test/unit/coffee/**/*.coffee']
 
       e2e:
         files:
-          "target/test/e2e/js/test.js": ["src/test/e2e/coffee/**/*.coffee"]
+          'target/test/e2e/js/test.js': ['src/test/e2e/coffee/**/*.coffee']
 
     watch:
       files: ['src/main/**/*', 'src/test/**/*']
-      tasks: ['copy', 'coffeelint', 'coffee']
+      tasks: ['build', 'karma:dev:run']
+
+    connect:
+      server:
+        options:
+          base: 'target/main'
 
     karma:
       options:
         frameworks: ['jasmine']
         browsers: ['Chrome']
-      unit:
+        files: ['target/main/lib/angular.js', 'target/test/unit/lib/angular-mocks.js', 'target/main/js/**/*.js', 'target/test/unit/js/**/*.js']
+      dev:
         options:
-          files: ['target/main/lib/angular.js', 'target/test/unit/lib/angular-mocks.js', 'target/main/js/**/*.js', 'target/test/unit/js/**/*.js']
+          background: true
+          reporters: 'dots'
 
+# Protractor doesn't work on mavericks at the moment.
     protractor:
       options:
         keepAlive: false,
-        configFile: "src/test/e2e/protractor.conf.js"
+        configFile: 'src/test/e2e/protractor.conf.js'
       singlerun: {}
 
     s3:
       options:
-        accessKeyId: "<%= aws.accessKeyId %>"
-        secretAccessKey: "<%= aws.secretAccessKey %>"
-        region: "<%= aws.region %>"
-        bucket: "<%= aws.bucket %>"
+        accessKeyId: '<%= aws.accessKeyId %>'
+        secretAccessKey: '<%= aws.secretAccessKey %>'
+        region: '<%= aws.region %>'
+        bucket: '<%= aws.bucket %>'
 
       build:
-        cwd: "target/main"
-        src: "**"
-        dest: "money-when/"
+        cwd: 'target/main'
+        src: '**'
+        dest: 'money-when/'
 
   # Load external Grunt task plugins.
-  grunt.loadNpmTasks "grunt-contrib-clean"
-  grunt.loadNpmTasks "grunt-contrib-copy"
-  grunt.loadNpmTasks "grunt-coffeelint"
-  grunt.loadNpmTasks "grunt-contrib-coffee"
-  grunt.loadNpmTasks "grunt-contrib-watch"
-  grunt.loadNpmTasks "grunt-karma"
-  grunt.loadNpmTasks "grunt-protractor-runner"
-  grunt.loadNpmTasks "grunt-aws"
+  grunt.loadNpmTasks 'grunt-contrib-clean'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
+  grunt.loadNpmTasks 'grunt-coffeelint'
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-contrib-connect'
+  grunt.loadNpmTasks 'grunt-karma'
+  grunt.loadNpmTasks 'grunt-protractor-runner'
+  grunt.loadNpmTasks 'grunt-aws'
 
   # Default task.
-  grunt.registerTask "default", ["clean", "copy", "coffeelint", "coffee"]
-  grunt.registerTask "deploy", ["clean", "copy", "coffeelint", "coffee", "s3"]
+  grunt.registerTask 'default', ['dev']
+  grunt.registerTask 'build', ['copy', 'coffeelint', 'coffee']
+  grunt.registerTask 'dev', ['build', 'connect', 'karma:dev:start', 'watch']
+  grunt.registerTask 'test', ['build', 'karma:dev']
+  grunt.registerTask 'deploy', ['clean', 'test', 's3']
