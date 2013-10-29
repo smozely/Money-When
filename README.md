@@ -9,4 +9,4 @@ More important than the application itself is this is an example of a fully work
 
 TODO
 ==========
-* Webdriver Tests using Protractor
+* Webdriver Tests using Protractor (not currently working in Mavericks)
