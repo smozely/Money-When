@@ -94,7 +94,7 @@ module.exports = (grunt) ->
         options:
           singleRun: true
 
-# Protractor doesn't work on mavericks at the moment.
+    # Protractor doesn't work on mavericks at the moment.
     protractor:
       options:
         keepAlive: false,
@@ -116,8 +116,8 @@ module.exports = (grunt) ->
   # Load external Grunt task plugins.
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-copy'
-  grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-karma'
